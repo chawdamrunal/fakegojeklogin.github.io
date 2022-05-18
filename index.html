@@ -1,0 +1,133 @@
+
+<!DOCTYPE html><html>
+<head>
+    <title>Login - GoJek &#8211; Single Sign on</title>
+    <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/><link type="text/css" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/><link rel="stylesheet" href="/cas/css/gate-cas.css"/><link rel="icon" href="/cas/favicon.ico" type="image/x-icon"/><script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.3.0/zxcvbn.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+
+</head>
+
+<body id="cas" class="login">
+<div id="container" class="container">
+    <header>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <a id="logo" href="http://www.go-jek.com" title="GoJek">GoJek</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            Single Sign-on Multifactor Authentication.
+        </div>
+    </div>
+
+</header>
+<div id="content">
+    <div class="row">
+
+        <div class="col-md-3">
+        </div>
+
+        <div class="col-md-6">
+            <div class="box" id="login">
+    <div class="login-header">
+        <h2>Login</h2>
+        <span class="fa-stack fa-2x hidden-xs">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-lock fa-stack-1x fa-inverse"></i>
+        </span>
+    </div>
+
+    <form method="post" id="fm1">
+
+        <h2>Enter your Username and Password</h2>
+
+        <section class="row">
+            <label for="username"><span class="accesskey">U</span>sername:</label>
+
+            <div>
+                <input class="required"
+                       id="username"
+                       size="25"
+                       tabindex="1"
+                       type="text"
+                       accesskey="u"
+                       autocomplete="off" name="username" value=""/></div>
+        </section>
+
+        <section class="row">
+            <label for="password"><span class="accesskey">P</span>assword:</label>
+            
+            <div>
+                <input class="required"
+                       type="password"
+                       id="password"
+                       size="25"
+                       tabindex="2"
+                       accesskey="p"
+                       autocomplete="off" name="password" value=""/><span id="capslock-on" style="display:none;">
+                    <p>
+                        <i class="fa fa-exclamation-circle"></i>
+                        <span>CAPSLOCK key is turned on!</span>
+                    </p>
+                </span>
+            </div>
+        </section>
+        <section class="row check">
+            </section>
+        
+        <section class="row btn-row">
+            <input type="hidden" name="execution" value="a29c5730-a647-4df2-95ad-e0885e263aa4_ZXlKaGJHY2lPaUpJVXpVeE1pSjkuUjJrdk9FNHdPV0ZFY214a2NsVTBPVWxIT1d0MlVFbEhSV1J3Umt4SGRUQjVVME15TWpsTWVUbDNVVFYzU0VKb2QwUXhVbGx3WlhreFVIQTJTSFJWV1hvNVJtVkpUbkpaS3pCM2VYcEpaRFV3V2xSWmIyRnBkVUZyTUVwWU9WSkZNbFZRTkhZdlVTOW9PVlp6UVdkbE5qQXpialoxWVhrcmNHZ3ZlblF5YVVsVFdHbE9iM3BhWkVKS2NHdEpUemxNYWtJck9GZDJlbUZ2WTFaVllVbEpjamhSU1dWbldWaE1SMUZPWldGNFJtZzJNMnByU0habVMxWllSRkZoUkUxQmMzbFlObXR5WldWSE1WbHpkVXhCTlZWUVpEQXlVV1JyYWxKb1VVUjZNelppWVRkNWFHTkRiRlZzVmpBdk5XVlBZemxYVXpaVWFtZEpVRlYxVWxSNVFrNUNSbTlOVmsxeFlqWTNjVmxPZUd4VldYaExMMG94WldkM00xRTBaV2hySzBZeVlsQnBhRVJSUmtRck4xQkpiSGR6UTB0eGVFTllaR04yWWxGUFJEazNkVW81UWt0Q1VqRXlORXRSTm1aaWRXRXpjR1l5TUdwNFZsSTJNV05XZURkUGExbDRSeTlxY0RKRGNHUlhWM0Z0VmtGQ2MyMWtWakZzVVV0WlExaGhRVWM1ZDFaTlNUQnFjbEF5VnpGcGJYcG9VMXB5ZWtWc1VWUlRhelZXT1hCS0wxZHpPWGhWVDFFMVpqQjJWRU4xYTBOd1FVYzJjekJKTDFGc1RHUnNTRXhEVG5CYVRUQklkRGhMWWl0aFVuRk9TRWxCZVhWMFJGVXlVVGRsUjBkYWRHNHdSVTFVWmpneFYxTlpWSGxVTkZkRGVGQkdMMVpRV0UweFFVTjRRa1pGTHpOM1JVZHhVWFp2UTNFNVZWQkVRVXd4ZUd0Nk1tRmxNVlJLWmpkdWJHaEJjMEZNTkVGU1NuZFJXVXR1YW14T09VbzFNMms1YkM5RlowcHRObmxVZFVkNFdHaFFiMGx5UVVNMWRrMVNTelJFVWpSaU1DdERjRFY2U1hJNVRuWXpkWGxzTkVkWVl5OHplVXA2UjFabFVHbHVlRUZaTlhoSlNHODBjVzkzYlZoS1ZDOVhUM0Z2YlZnM2EwRkZjVkV2TUhseE9UTXliWE5tVG14WWVVWnFPRWcxTkZFNVUzaFVaamxMTlcxS2IwWTBTMDAwWTBvMVJXMVZSWFI2YUROM2JHeFZaa0ZCZW14ak5XSTFlV016VDJ0ck1teEdPRm8zYTBaUFoxaDBXbGhWT1c1WE0xWjVXWGR6UmtFeloyRnBjRlJYVFRGT1JXTjRlVkk1T0UxaVkxVldhRFY2YlZaWGFtaElOWFZsUkhZMksyWkpjMFZQVFN0cGNGRXdOblk0Y1RjcmJsQndSblE0ZEZRMWRXMWhjRGN4ZFhrMlpHNUlkMHMwUVdaeFZWVnZVSGxHWm1Jd09HMHpaMmhCVmtKTWNtRnlTMHMwVm5kblJGSTJaVVptUmtSRVdrcDVURlpZUldrMlRYWlFRV3RMV0hWbFZHd3dibXh0U25nM04zVndRV2xEYzBWU1NHWklMMVo0TW5kR1VsVmFTbGxZY0RkR2N6WmxZblUxWTFKdWExTk9kMjl1VlhjdmVUaFVkMVZXU0dRNWFHaHJSbk0yZUZoaGIzWXpkVlYyZWpoWk4ybE5aemgzUTBGdFExcHdXVUV2TUVGclozVnFaWFI2YUM4d2J6TlVZV2RaTHpGNFIyRlhNbVpCZGtGU2REQm1iR0ppWkZOVU5VbHRXbWd4VWpaa2VVcEpTR1Z1WkRCSmFEQk9jbE5vTTJjOVBRLjg5dkRwdW5kZ1hKdHZpbDFMcTNGenBOUUZjTlNnV1d5TEh5YzQ5OFB4TWJnbjREWVF4TGNnS1hhYmExX2JTSGZ0dXJ5dm5XaTlyZHd4YWlZbHpsN3FB"/><input type="hidden" name="_eventId" value="submit"/><input type="hidden" name="geolocation"/><input class="btn btn-submit btn-block"
+                   name="submit"
+                   accesskey="l"
+                   value="LOGIN"
+                   tabindex="6"
+                   type="submit"/></section>
+    </form>
+
+    
+    <script type="text/javascript">
+        var i = "One moment please..."
+        $("#fm1").submit(function() {
+            $(":submit").attr("disabled", true);
+            $(":submit").attr("value", i);
+            return true;
+        });
+    </script>
+    <div id="sidebar">
+    <div class="sidebar-content">
+        <p>For security reasons, please <a href="logout">log out</a> and exit your web browser when you are done accessing services that require authentication!</p>
+    </div>
+</div>
+
+</div>
+</div>
+
+        <div class="col-md-6">
+        </div>
+    </div>
+</div>
+    <footer>
+    <div id="copyright" class="container">
+        <p>Copyright &copy; 2005&ndash;2017 Apereo, Inc. </p>
+        <p>Powered by <a href="http://www.apereo.org/cas">
+            Apereo Central Authentication Service
+            <span>5.1.0</span>
+            <span>2017-06-19T15:06:18Z</span> </a>
+        </p>
+    </div>
+</footer>
+</div>
+<div><script src="//cdnjs.cloudflare.com/ajax/libs/headjs/1.0.3/head.min.js"></script>
+<script type="text/javascript" src="/cas/js/cas.js"></script>
+
+
+
+</div>
+
+</body>
+</html>
